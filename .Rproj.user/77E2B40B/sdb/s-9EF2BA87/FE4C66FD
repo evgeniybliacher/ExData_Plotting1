@@ -1,0 +1,16 @@
+{
+    "contents" : "#Download and read raw data\n\ntemp <- tempfile()\ndownload.file(\"https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip\",temp)\ndata <- read.csv(unz(temp, \"household_power_consumption.txt\"), header = TRUE, sep = \";\", na.strings=\"?\")\nunlink(temp)\n\n\n\n#Go to the tidy data\ndata <- within(data, { timestamp=paste(Date, Time) })\ndata$timestamp <- strptime(data$timestamp, \"%d/%m/%Y %H:%M:%S\")\n\nrelevantData <- subset(data, timestamp > strptime(\"31/01/2007 23:59:59\", \"%d/%m/%Y %H:%M:%S\") & timestamp < strptime(\"03/02/2007 00:00:00\", \"%d/%m/%Y %H:%M:%S\"))\n\n#Plot data\npar(mar=c(4,10,2,4))\nhist(relevantData$Global_active_power, col = 'red', ylim = range(0,1200,100), main = \"Global Activity Power\", xlab = \"Global Activity Power(kilowatts)\" )\ndev.copy(png, file=\"plot1.png\")\ndev.off()\n",
+    "created" : 1413314873926.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3698615688",
+    "id" : "FE4C66FD",
+    "lastKnownWriteTime" : 1413314761,
+    "path" : "C:/GitHub/ExData_Plotting1/plot1.R",
+    "project_path" : "plot1.R",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}
